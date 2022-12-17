@@ -6,11 +6,18 @@ using Amazon.CognitoIdentityProvider; // for AmazonCognitoIdentityProviderClient
 using Amazon.Extensions.CognitoAuthentication; // for CognitoUserPool
 using Amazon; // for RegionEndpoint
 
+/**
+ * <summary>
+ * サインインのPresenterクラス
+ * </summary>
+ */
 public class Signin : MonoBehaviour
 {
+    [Header("View")]
     public TMP_InputField emailField;
     public TMP_InputField passwordField;
-    public TextMeshProUGUI resultText;
+
+    // 定数
     static string appClientId = AWSCognitoIDs.AppClientId;
     static string userPoolId = AWSCognitoIDs.UserPoolId;
 
@@ -19,6 +26,7 @@ public class Signin : MonoBehaviour
         try
         {
             AuthenticateWithSrpAsync();
+            CompleteSignin();
         }
         catch (Exception ex)
         {
@@ -47,6 +55,16 @@ public class Signin : MonoBehaviour
         }).ConfigureAwait(true);
 
         // for debug
-        resultText.text = user.SessionTokens.IdToken;
+        Debug.Log(user.SessionTokens.IdToken);
+    }
+
+    /**
+     * <summary>
+     * サインインが正常に完了したときの処理
+     * </summary>
+     */
+    public void CompleteSignin()
+    {
+
     }
 }
