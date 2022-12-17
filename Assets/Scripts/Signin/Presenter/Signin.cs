@@ -1,24 +1,48 @@
-
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Amazon.CognitoIdentityProvider; // for AmazonCognitoIdentityProviderClient
 using Amazon.Extensions.CognitoAuthentication; // for CognitoUserPool
 using Amazon; // for RegionEndpoint
+using Cysharp.Threading.Tasks;
 
+/**
+ * <summary>
+ * サインインのPresenterクラス
+ * </summary>
+ */
 public class Signin : MonoBehaviour
 {
+    [Header("View")]
     public TMP_InputField emailField;
     public TMP_InputField passwordField;
-    public TextMeshProUGUI resultText;
+    public Button SigninButton;
+    public Button SignupButton;
+
+    // 定数
     static string appClientId = AWSCognitoIDs.AppClientId;
     static string userPoolId = AWSCognitoIDs.UserPoolId;
 
-    public void OnClick()
+    private void Start()
+    {
+        SigninButton.onClick.AddListener(async () =>
+        {
+            await OnSigninClick();
+        });
+
+        SignupButton.onClick.AddListener(async () =>
+        {
+            await Extensions.TransitScene(SceneType.SIGNUP);
+        });
+    }
+
+    public async UniTask OnSigninClick()
     {
         try
         {
-            AuthenticateWithSrpAsync();
+            await AuthenticateWithSrpAsync();
+            await CompleteSignin();
         }
         catch (Exception ex)
         {
@@ -26,7 +50,7 @@ public class Signin : MonoBehaviour
         }
     }
 
-    public async void AuthenticateWithSrpAsync()
+    public async UniTask AuthenticateWithSrpAsync()
     {
         var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);
         CognitoUserPool userPool = new CognitoUserPool(
@@ -47,6 +71,17 @@ public class Signin : MonoBehaviour
         }).ConfigureAwait(true);
 
         // for debug
-        resultText.text = user.SessionTokens.IdToken;
+        Debug.Log(user.SessionTokens.IdToken);
+    }
+
+    /**
+     * <summary>
+     * サインインが正常に完了したときの処理
+     * </summary>
+     */
+    public async UniTask CompleteSignin()
+    {
+        GameManager.Instance.Email = emailField.text;
+        await Extensions.TransitScene(SceneType.MAIN);
     }
 }
