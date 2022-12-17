@@ -5,5 +5,5 @@
  */
 public sealed class GameManager : Singleton<GameManager>
 {
-    public string EmailAddress { get; private set; }
+    public string Email { get; set; }
 }
