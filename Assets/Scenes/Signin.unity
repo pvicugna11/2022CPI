@@ -532,6 +532,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u30B5\u30A4\u30F3\u30A4\u30F3"
       objectReference: {fileID: 0}
+    - target: {fileID: 6122628228468975177, guid: 400d9c72a5a91ea4f812d182b633ad8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8723426818531038561, guid: 400d9c72a5a91ea4f812d182b633ad8e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
