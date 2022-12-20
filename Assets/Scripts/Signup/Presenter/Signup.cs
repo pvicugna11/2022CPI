@@ -75,6 +75,6 @@ public class Signup : MonoBehaviour
     public void CompleteSignup()
     {
         GameManager.Instance.Email = emailField.text;
-        SignupUIManager.Instance.SetCanvasGroup(SignupUIManager.Instance.Signup, SignupUIManager.Instance.Confirmation);
+        SignupUIManager.Instance.SetCanvasGroup(SignupUIManager.Instance.Confirmation);
     }
 }

@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SignupUIManager : UIManager
-{
-    public static SignupUIManager Instance { get; private set; }
-    
+public class SignupUIManager : UIManager<SignupUIManager>
+{    
     public CanvasGroup Signup;
     public CanvasGroup Confirmation;
 
-    private void Awake()
+    private void Start()
     {
-        Instance = this;
+        DisplayCanvasGroup(Signup);
     }
 }
