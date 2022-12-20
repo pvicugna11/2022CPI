@@ -17,6 +17,7 @@ public class Signup : MonoBehaviour
     [Header("View")]
     public TMP_InputField emailField;
     public TMP_InputField passwordField;
+    public TMP_InputField NicknameField;
     public Button SignupButton;
 
     // 定数
@@ -39,14 +40,22 @@ public class Signup : MonoBehaviour
         var sr = new SignUpRequest();
         string email = emailField.text;
         string password = passwordField.text;
+        string nickname = NicknameField.text;
 
         sr.ClientId = appClientId;
         sr.Username = email;
         sr.Password = password;
-        sr.UserAttributes = new List<AttributeType> {
-            new AttributeType {
+        sr.UserAttributes = new List<AttributeType>
+        {
+            new AttributeType
+            {
                 Name = "email",
-                Value = email
+                Value = email,
+            },
+            new AttributeType
+            {
+                Name = "nickname",
+                Value = nickname,
             }
         };
 
