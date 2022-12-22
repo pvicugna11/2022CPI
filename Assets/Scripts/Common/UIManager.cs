@@ -24,6 +24,7 @@ public class UIManager<T> : MonoBehaviour where T : UIManager<T>
         canvasGroup.alpha = 0;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+        canvasGroup.gameObject.SetActive(false);
     }
 
     public void DisplayCanvasGroup(CanvasGroup canvasGroup)
@@ -31,6 +32,7 @@ public class UIManager<T> : MonoBehaviour where T : UIManager<T>
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+        canvasGroup.gameObject.SetActive(true);
 
         currentCanvasGroup = canvasGroup;
     }

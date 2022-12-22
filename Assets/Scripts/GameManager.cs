@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Amazon.Extensions.CognitoAuthentication;
 
 /**
@@ -11,4 +12,10 @@ public sealed class GameManager : Singleton<GameManager>
     public CognitoUserSession Session { get; set; }
     public string Email { get; set; }
     public string Nickname { get; set; }
+    public List<Task> Tasks { get; set; } = new List<Task>();
+    
+    public void GetMyInfo()
+    {
+        
+    }
 }

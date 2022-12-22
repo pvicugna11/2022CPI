@@ -72,6 +72,7 @@ public class Signin : MonoBehaviour
 
         // for debug
         Debug.Log(user.SessionTokens.IdToken);
+        GameManager.Instance.Session = user.SessionTokens;
     }
 
     /**

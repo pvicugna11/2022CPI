@@ -12,35 +12,54 @@ public static class API<T>
     {
         string url = URL + funcName;
 
-        UnityWebRequest request = UnityWebRequest.Post(url, postData);
-        request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
-
-        await request.SendWebRequest();
-
-        switch (request.result)
+        using (UnityWebRequest request = UnityWebRequest.Post(url, postData))
         {
-            case UnityWebRequest.Result.Success:
-                return JsonUtility.FromJson<T>(request.downloadHandler.text);
-            default:
-                Debug.LogError("取得できませんでした．");
-                return default(T);
+            request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
+
+            await request.SendWebRequest();
+
+            switch (request.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    return JsonUtility.FromJson<T>(request.downloadHandler.text);
+                default:
+                    Debug.LogError("取得できませんでした．");
+                    return default(T);
+            }
         }
     }
+}
 
-    public static class GetTasks
+public static class GetTasks
+{
+    public const string FUNC_NAME = "get_tasks";
+
+    [Serializable]
+    public class PostData
     {
-        public const string FUNC_NAME = "get_tasks";
+        public string id;
+    }
 
-        [Serializable]
-        public class PostData
-        {
-            public string id;
-        }
+    [Serializable]
+    public class Response
+    {
+        public List<Task> tasks;
+    }
+}
 
-        [Serializable]
-        public class Response
-        {
-            public List<Task> tasks;
-        }
+public static class CreateTask
+{
+    public const string FUNC_NAME = "create_task";
+
+    [Serializable]
+    public class PostData
+    {
+        public List<Task> tasks;
+    }
+
+    [Serializable]
+    public class Response
+    {
+
     }
 }
