@@ -32,7 +32,7 @@ public class Confirmation : MonoBehaviour
         var client = new AmazonCognitoIdentityProviderClient(null, Amazon.RegionEndpoint.APNortheast1);
         ConfirmSignUpRequest confirmSignUpRequest = new ConfirmSignUpRequest();
 
-        confirmSignUpRequest.Username = GameManager.Instance.myUser.email;
+        confirmSignUpRequest.Username = GameManager.Instance.Player.email;
         confirmSignUpRequest.ConfirmationCode = confirmationCodeField.text;
         confirmSignUpRequest.ClientId = appClientId;
 

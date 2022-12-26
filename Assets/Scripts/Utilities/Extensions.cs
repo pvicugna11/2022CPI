@@ -37,8 +37,8 @@ public static class Extensions
      */
     public static async UniTask GetMyUser()
     {
-        if (GameManager.Instance.myUser == null) { GameManager.Instance.myUser = new MyUser(); }
+        if (GameManager.Instance.Player == null) { GameManager.Instance.Player = new MyUser(); }
 
-        GameManager.Instance.myUser.SetMyUser(await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME));
+        GameManager.Instance.Player.SetMyUser(await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME));
     }
 }

@@ -20,10 +20,6 @@ public class Signin : MonoBehaviour
     public Button SigninButton;
     public Button SignupButton;
 
-    // 定数
-    static string appClientId = AWSCognitoIDs.AppClientId;
-    static string userPoolId = AWSCognitoIDs.UserPoolId;
-
     private void Start()
     {
         SigninButton.onClick.AddListener(async () =>
@@ -42,7 +38,7 @@ public class Signin : MonoBehaviour
         try
         {
             await AuthenticateWithSrpAsync();
-            await CompleteSignin();
+            await GameManager.Instance.CompleteSignin();
         }
         catch (Exception ex)
         {
@@ -54,13 +50,13 @@ public class Signin : MonoBehaviour
     {
         var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);
         CognitoUserPool userPool = new CognitoUserPool(
-            userPoolId,
-            appClientId,
+            GameManager.userPoolId,
+            GameManager.appClientId,
             provider
         );
         CognitoUser user = new CognitoUser(
             emailField.text,
-            appClientId,
+            GameManager.appClientId,
             userPool,
             provider
         );
@@ -70,22 +66,9 @@ public class Signin : MonoBehaviour
             Password = passwordField.text
         }).ConfigureAwait(true);
 
-        // for debug
-        Debug.Log(user.SessionTokens.IdToken);
         GameManager.Instance.Session = user.SessionTokens;
 
-        var userInfo =  await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME);
-    }
-
-    /**
-     * <summary>
-     * サインインが正常に完了したときの処理
-     * </summary>
-     */
-    public async UniTask CompleteSignin()
-    {
-        await Extensions.GetMyUser();
-
-        await Extensions.TransitScene(SceneType.MAIN);
+        // for debug
+        Debug.Log(GameManager.Instance.Session.IdToken);
     }
 }

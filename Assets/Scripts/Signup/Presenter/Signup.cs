@@ -74,7 +74,7 @@ public class Signup : MonoBehaviour
 
     public void CompleteSignup()
     {
-        GameManager.Instance.myUser = new MyUser()
+        GameManager.Instance.Player = new MyUser()
         {
             nickname = NicknameField.text,
             email = emailField.text,
