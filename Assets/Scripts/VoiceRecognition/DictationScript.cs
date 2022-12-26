@@ -1,3 +1,5 @@
+#if UNITY_STANDALONE_WIN
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
@@ -43,3 +45,5 @@ public class DictationScript : MonoBehaviour
         m_DictationRecognizer.Start();
     }
 }
+
+#endif
