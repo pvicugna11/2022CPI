@@ -53,7 +53,7 @@ public static class API<T>
 
 public static class GetTasks
 {
-    public const string FUNC_NAME = "get_tasks";
+    public const string FUNC_NAME = "task/get_tasks";
 
     [Serializable]
     public class PostData
@@ -70,7 +70,7 @@ public static class GetTasks
 
 public static class CreateTask
 {
-    public const string FUNC_NAME = "create_task";
+    public const string FUNC_NAME = "task/create_task";
 
     [Serializable]
     public class PostData
