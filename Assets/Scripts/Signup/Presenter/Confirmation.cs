@@ -32,7 +32,7 @@ public class Confirmation : MonoBehaviour
         var client = new AmazonCognitoIdentityProviderClient(null, Amazon.RegionEndpoint.APNortheast1);
         ConfirmSignUpRequest confirmSignUpRequest = new ConfirmSignUpRequest();
 
-        confirmSignUpRequest.Username = GameManager.Instance.Email;
+        confirmSignUpRequest.Username = GameManager.Instance.myUser.email;
         confirmSignUpRequest.ConfirmationCode = confirmationCodeField.text;
         confirmSignUpRequest.ClientId = appClientId;
 
@@ -51,6 +51,6 @@ public class Confirmation : MonoBehaviour
 
     public async UniTask CompleteConfirmation()
     {
-        await Extensions.TransitScene(SceneType.MAIN);
+        await Extensions.TransitScene(SceneType.SIGNIN);
     }
 }

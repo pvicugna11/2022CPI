@@ -73,6 +73,8 @@ public class Signin : MonoBehaviour
         // for debug
         Debug.Log(user.SessionTokens.IdToken);
         GameManager.Instance.Session = user.SessionTokens;
+
+        var userInfo =  await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME);
     }
 
     /**
@@ -82,7 +84,8 @@ public class Signin : MonoBehaviour
      */
     public async UniTask CompleteSignin()
     {
-        GameManager.Instance.Email = emailField.text;
+        await Extensions.GetMyUser();
+
         await Extensions.TransitScene(SceneType.MAIN);
     }
 }

@@ -8,11 +8,32 @@ public static class API<T>
 {
     private const string URL = "https://mpvi4fz94b.execute-api.ap-northeast-1.amazonaws.com/";
 
-    public static async UniTask<T> Request(string funcName, string postData)
+    public static async UniTask<T> Post(string funcName, string postData)
     {
         string url = URL + funcName;
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, postData))
+        {
+            request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
+
+            await request.SendWebRequest();
+
+            switch (request.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    return JsonUtility.FromJson<T>(request.downloadHandler.text);
+                default:
+                    Debug.LogError("取得できませんでした．");
+                    return default(T);
+            }
+        }
+    }
+
+    public static async UniTask<T> Get(string funcName)
+    {
+        string url = URL + funcName;
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
 
@@ -61,5 +82,19 @@ public static class CreateTask
     public class Response
     {
 
+    }
+}
+
+public static class DecodeIdtoken
+{
+    public const string FUNC_NAME = "decode_idtoken";
+
+    [Serializable]
+    public class Response
+    {
+        public string id;
+        public string nickname;
+        public string email;
+        public List<string> groupNames;
     }
 }

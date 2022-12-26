@@ -74,7 +74,12 @@ public class Signup : MonoBehaviour
 
     public void CompleteSignup()
     {
-        GameManager.Instance.Email = emailField.text;
+        GameManager.Instance.myUser = new MyUser()
+        {
+            nickname = NicknameField.text,
+            email = emailField.text,
+        };
+
         SignupUIManager.Instance.SetCanvasGroup(SignupUIManager.Instance.Confirmation);
     }
 }

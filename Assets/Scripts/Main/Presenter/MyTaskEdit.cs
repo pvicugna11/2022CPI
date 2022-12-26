@@ -74,7 +74,7 @@ public class MyTaskEdit : MonoBehaviour
         {
             tasks = tasks,
         };
-        await API<CreateTask.Response>.Request(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
+        await API<CreateTask.Response>.Post(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 
     private void OnAddClick()
