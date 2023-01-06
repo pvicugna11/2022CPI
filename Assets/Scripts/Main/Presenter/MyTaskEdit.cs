@@ -7,8 +7,6 @@ using Cysharp.Threading.Tasks;
 
 public class MyTaskEdit : MonoBehaviour
 {
-    private List<Task> tasks = new List<Task>();
-
     [Header("View")]
     [SerializeField] private Button editCompleteButton;
     [SerializeField] private Button addButton;
@@ -16,18 +14,15 @@ public class MyTaskEdit : MonoBehaviour
     [Space(10)]
     [SerializeField] private Transform content;
     [SerializeField] private TMP_InputField taskInputFieldPrefab;
-
-    private List<TMP_InputField> taskInputFields = new List<TMP_InputField>();
+    
+    public List<TMP_InputField> taskInputFields = new List<TMP_InputField>();
+    public int taskNum;
 
     private void Awake()
     {
         for (int i = 0; i < GameManager.MAX_TASK_NUM; ++i)
         {
             var comp = Instantiate(taskInputFieldPrefab, content);
-            comp.onEndEdit.AddListener(str =>
-            {
-                tasks[i] = new Task(str);
-            });
             taskInputFields.Add(comp);
             comp.gameObject.SetActive(false);
         }
@@ -35,16 +30,15 @@ public class MyTaskEdit : MonoBehaviour
 
     private void OnEnable()
     {
-        tasks = GameManager.Instance.Tasks;
-
         int i = 0;
-        foreach (var comp in tasks)
+        foreach (var comp in GameManager.Instance.Tasks)
         {
             taskInputFields[i].gameObject.SetActive(true);
             taskInputFields[i].text = comp.name;
-
             i++;
         }
+
+        taskNum = i;
     }
 
     private void Start()
@@ -68,24 +62,34 @@ public class MyTaskEdit : MonoBehaviour
 
     private async UniTask OnEditCompleteClick()
     {
+        List<Task> tasks = new List<Task>();
+        for (int i = 0; i < GameManager.MAX_TASK_NUM; ++i)
+        {
+            if (!taskInputFields[i].gameObject.activeSelf) { break; }
+
+            tasks.Add(new Task(taskInputFields[i].text));
+        }
+
         await Extensions.SetMyTasks(tasks);
     }
 
     private void OnAddClick()
     {
-        tasks.Add(new Task(""));
+        // タスクが上限以上ならreturn
+        if (taskNum >= GameManager.MAX_TASK_NUM) { return; }
 
-        taskInputFields[tasks.Count - 1].gameObject.SetActive(true);
-        taskInputFields[tasks.Count - 1].text = "";
+        taskInputFields[taskNum].gameObject.SetActive(true);
+        taskInputFields[taskNum].text = "";
+        taskNum++;
     }
 
     private void OnDeleteClick()
     {
-        if (tasks.Count == 1) { return; }
+        // タスクが1個以下ならreturn
+        if (taskNum <= 1) { return; }
 
-        tasks.RemoveAt(tasks.Count - 1);
-
-        taskInputFields[tasks.Count - 1].gameObject.SetActive(false);
-        taskInputFields[tasks.Count - 1].text = "";
+        taskInputFields[taskNum - 1].gameObject.SetActive(false);
+        taskInputFields[taskNum - 1].text = "";
+        taskNum--;
     }
 }

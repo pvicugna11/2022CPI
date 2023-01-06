@@ -37,7 +37,7 @@ public class MyTask : MonoBehaviour
         {
             var prefab = Instantiate(taskPrefab, content);
             taskPrefabs.Add(prefab);
-            prefab.gameObject.SetActive(false);
+            taskPrefabs[i].gameObject.SetActive(false);
         }
     }
 
@@ -49,6 +49,7 @@ public class MyTask : MonoBehaviour
         // タスクがなかったら起床のタスクを作成
         if (GameManager.Instance.Tasks.Count == 0)
         {
+            Debug.Log("タスクの生成");
             GameManager.Instance.Tasks.Add(new Task("起床"));
             await Extensions.SetMyTasks(GameManager.Instance.Tasks);
         }
