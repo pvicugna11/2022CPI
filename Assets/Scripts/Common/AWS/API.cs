@@ -14,16 +14,20 @@ public static class API<T>
 
         await UniTask.WaitUntil(() => GameManager.Instance.IsLogin);
 
-        using (UnityWebRequest request = UnityWebRequest.Post(url, postData))
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
             request.SetRequestHeader("Content-Type", "application/json");
             request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
+
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(postData));
+            request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
             await request.SendWebRequest();
 
             switch (request.result)
             {
                 case UnityWebRequest.Result.Success:
+                    Debug.Log(request.downloadHandler.text);
                     return JsonUtility.FromJson<T>(request.downloadHandler.text);
                 default:
                     Debug.LogError(request.result);
@@ -47,6 +51,7 @@ public static class API<T>
             switch (request.result)
             {
                 case UnityWebRequest.Result.Success:
+                    Debug.Log(request.downloadHandler.text);
                     return JsonUtility.FromJson<T>(request.downloadHandler.text);
                 default:
                     Debug.LogError(request.result);
