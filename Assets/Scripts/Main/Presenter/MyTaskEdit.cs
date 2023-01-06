@@ -19,11 +19,9 @@ public class MyTaskEdit : MonoBehaviour
 
     private List<TMP_InputField> taskInputFields = new List<TMP_InputField>();
 
-    private const int MAX_TASK_NUM = 10;
-
     private void Awake()
     {
-        for (int i = 0; i < MAX_TASK_NUM; ++i)
+        for (int i = 0; i < GameManager.MAX_TASK_NUM; ++i)
         {
             var comp = Instantiate(taskInputFieldPrefab, content);
             comp.onEndEdit.AddListener(str =>
@@ -70,11 +68,7 @@ public class MyTaskEdit : MonoBehaviour
 
     private async UniTask OnEditCompleteClick()
     {
-        var postData = new CreateTask.PostData()
-        {
-            tasks = tasks,
-        };
-        await API<CreateTask.Response>.Post(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
+        await Extensions.SetMyTasks(tasks);
     }
 
     private void OnAddClick()

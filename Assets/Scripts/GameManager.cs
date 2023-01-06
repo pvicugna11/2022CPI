@@ -14,24 +14,25 @@ using Cysharp.Threading.Tasks;
  */
 public sealed class GameManager : Singleton<GameManager>
 {
+    public bool IsDebug;
+
     // ユーザ情報
-    public CognitoUserSession Session { get; set; }
-    public MyUser Player { get; set; }
-    public Date LoginDate { get; set; }
-    public List<Task> Tasks { get; set; } = new List<Task>();
+    public SessionData Session = new SessionData();
+    public MyUser Player;
+    public Date LoginDate;
+    public List<Task> Tasks = new List<Task>();
+    public bool IsLogin { get; set; }
 
     // 定数
     public static string appClientId = AWSCognitoIDs.AppClientId;
     public static string userPoolId = AWSCognitoIDs.UserPoolId;
+    public const int MAX_TASK_NUM = 10; // タスクの最大数
 
-    protected override async void Awake()
+    private async void Start()
     {
-        base.Awake();
-
         if (!LoadSession()) { return; }
 
         await UniTask.WaitUntil(() => Player != null);
-
         if (await RefreshTokenSignin()) { await CompleteSignin(); }
     }
 
@@ -49,9 +50,9 @@ public sealed class GameManager : Singleton<GameManager>
         public MyUser player;
         public Date date;
 
-        public void Fetch()
+        public void Set()
         {
-            GameManager.Instance.Session = new CognitoUserSession("", "", refreshToken, DateTime.Now, DateTime.Now.AddHours(1));
+            GameManager.Instance.Session.RefreshToken = refreshToken;
             GameManager.Instance.Player = player;
             GameManager.Instance.LoginDate = new Date(DateTime.Now);
         }
@@ -74,7 +75,7 @@ public sealed class GameManager : Singleton<GameManager>
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            data.Fetch();
+            data.Set();
 
             return true;
         }
@@ -100,7 +101,7 @@ public sealed class GameManager : Singleton<GameManager>
             provider
         );
 
-        user.SessionTokens = Session;
+        user.SessionTokens = new CognitoUserSession("", "", Session.RefreshToken, DateTime.Now, DateTime.Now.AddHours(1));
 
         try
         {
@@ -109,8 +110,11 @@ public sealed class GameManager : Singleton<GameManager>
                 AuthFlowType = AuthFlowType.REFRESH_TOKEN_AUTH,
             });
 
-            Session = user.SessionTokens;
+            Session.Set(user.SessionTokens);
+            IsLogin = true;
 
+            Debug.Log(Session.IdToken);
+            
             return true;
         }
         catch
@@ -130,6 +134,11 @@ public sealed class GameManager : Singleton<GameManager>
 
         SaveSession();
 
+        if (IsDebug)
+        {
+            await Extensions.TransitScene(SceneType.DEBUG);
+            return;
+        }
         await Extensions.TransitScene(SceneType.MAIN);
     }
 }

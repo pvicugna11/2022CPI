@@ -12,8 +12,11 @@ public static class API<T>
     {
         string url = URL + funcName;
 
+        await UniTask.WaitUntil(() => GameManager.Instance.IsLogin);
+
         using (UnityWebRequest request = UnityWebRequest.Post(url, postData))
         {
+            request.SetRequestHeader("Content-Type", "application/json");
             request.SetRequestHeader("Authorization", GameManager.Instance.Session.IdToken);
 
             await request.SendWebRequest();
@@ -23,7 +26,7 @@ public static class API<T>
                 case UnityWebRequest.Result.Success:
                     return JsonUtility.FromJson<T>(request.downloadHandler.text);
                 default:
-                    Debug.LogError("取得できませんでした．");
+                    Debug.LogError(request.result);
                     return default(T);
             }
         }
@@ -32,6 +35,8 @@ public static class API<T>
     public static async UniTask<T> Get(string funcName)
     {
         string url = URL + funcName;
+
+        await UniTask.WaitUntil(() => GameManager.Instance.IsLogin);
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -44,13 +49,14 @@ public static class API<T>
                 case UnityWebRequest.Result.Success:
                     return JsonUtility.FromJson<T>(request.downloadHandler.text);
                 default:
-                    Debug.LogError("取得できませんでした．");
+                    Debug.LogError(request.result);
                     return default(T);
             }
         }
     }
 }
 
+// POST
 public static class GetTasks
 {
     public const string FUNC_NAME = "task/get_tasks";
@@ -85,6 +91,7 @@ public static class CreateTask
     }
 }
 
+// GET
 public static class DecodeIdtoken
 {
     public const string FUNC_NAME = "decode_idtoken";
@@ -96,5 +103,16 @@ public static class DecodeIdtoken
         public string nickname;
         public string email;
         public List<string> groupNames;
+    }
+}
+
+public static class GetOwnTask
+{
+    public const string FUNC_NAME = "task/get_own_task";
+
+    [Serializable]
+    public class Response
+    {
+        public List<Task> tasks;
     }
 }

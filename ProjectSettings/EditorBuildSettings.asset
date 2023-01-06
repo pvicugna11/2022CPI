@@ -10,8 +10,11 @@ EditorBuildSettings:
     guid: d869920e7676f17479887954d718d1a9
   - enabled: 1
     path: Assets/Scenes/Signup.unity
-    guid: 25b0c7f5a5f38d949a79840a49141d71
+    guid: c2f47f0aa78f3c74fa80d7b945fcabd1
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 59ab46021938b9848b158ff0b2aaa193
   m_configObjects: {}

@@ -66,7 +66,8 @@ public class Signin : MonoBehaviour
             Password = passwordField.text
         }).ConfigureAwait(true);
 
-        GameManager.Instance.Session = user.SessionTokens;
+        GameManager.Instance.Session.Set(user.SessionTokens);
+        GameManager.Instance.IsLogin = true;
 
         // for debug
         Debug.Log(GameManager.Instance.Session.IdToken);

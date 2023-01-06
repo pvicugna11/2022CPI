@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 
@@ -40,5 +42,42 @@ public static class Extensions
         if (GameManager.Instance.Player == null) { GameManager.Instance.Player = new MyUser(); }
 
         GameManager.Instance.Player.SetMyUser(await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME));
+    }
+
+    /**
+     * <summary>
+     * タスク情報を取得する
+     * </summary>
+     */
+    public static async UniTask GetUserTasks(string _id)
+    {
+        var postData = new GetTasks.PostData()
+        {
+            id = _id,
+        };
+
+        var res = await API<GetTasks.Response>.Post(GetTasks.FUNC_NAME, JsonUtility.ToJson(postData));
+        GameManager.Instance.Tasks = res.tasks;
+    }
+
+    /**
+     * <summary>
+     * 自分のタスクを登録する
+     * </summary>
+     */
+    public static async UniTask SetMyTasks(List<Task> tasks)
+    {
+        var postData = new CreateTask.PostData()
+        {
+            tasks = tasks,
+        };
+
+        await API<CreateTask.Response>.Post(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
+    }
+
+    public static async UniTask GetMyTasks()
+    {
+        var res = await API<GetOwnTask.Response>.Get(GetOwnTask.FUNC_NAME);
+        GameManager.Instance.Tasks = res.tasks;
     }
 }
