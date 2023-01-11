@@ -113,14 +113,21 @@ public static class DecodeIdtoken
 }
 
 // ------------------------------ GROUP ------------------------------
-// ------------------------------ GET ------------------------------
+// ------------------------------ POST ------------------------------
 public static class GetGroup
 {
     public const string FUNC_NAME = "group/get_group";
 
     [Serializable]
+    public class PostData
+    {
+        public string name;
+    }
+
+    [Serializable]
     public class Response
     {
-        
+        public List<string> members;
+        public Date startDate;
     }
 }

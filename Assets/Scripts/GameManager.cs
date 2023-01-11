@@ -26,12 +26,13 @@ public sealed class GameManager : Singleton<GameManager>
     public List<Task> Tasks = new List<Task>();
 
     // グループ
-    public List<Group> Groups = new List<Group>();
+    public Group CurrentGroup;
 
     // 定数
     public static string appClientId = AWSCognitoIDs.AppClientId;
     public static string userPoolId = AWSCognitoIDs.UserPoolId;
-    public const int MAX_TASK_NUM = 10; // タスクの最大数
+    public const int MAX_TASK_NUM = 10;  // タスクの最大数
+    public const int MAX_GROUP_NUM = 10; // グループの最大数
 
     private async void Start()
     {

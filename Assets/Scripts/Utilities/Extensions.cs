@@ -77,11 +77,16 @@ public static class Extensions
 
     /**
      * <summary>
-     * 自分の所属しているグループを取得する
+     * 自分の所属しているグループのデータを取得する
      * </summary>
      */
-    public static async UniTask GetMyGroups()
+    public static async UniTask GetMyGroup(string groupName)
     {
-        await API<GetGroup.Response>.Get(GetGroup.FUNC_NAME);
+        var postData = new GetGroup.PostData()
+        {
+            name = groupName,
+        };
+
+        GameManager.Instance.CurrentGroup.Set(groupName, await API<GetGroup.Response>.Post(GetGroup.FUNC_NAME, JsonUtility.ToJson(postData)));
     }
 }
