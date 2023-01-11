@@ -61,7 +61,8 @@ public static class API<T>
     }
 }
 
-// POST
+// ------------------------------ TASK ------------------------------
+// ------------------------------ POST ------------------------------
 public static class GetTasks
 {
     public const string FUNC_NAME = "task/get_tasks";
@@ -96,7 +97,7 @@ public static class CreateTask
     }
 }
 
-// GET
+// ------------------------------ GET ------------------------------
 public static class DecodeIdtoken
 {
     public const string FUNC_NAME = "decode_idtoken";
@@ -111,13 +112,15 @@ public static class DecodeIdtoken
     }
 }
 
-public static class GetOwnTask
+// ------------------------------ GROUP ------------------------------
+// ------------------------------ GET ------------------------------
+public static class GetGroup
 {
-    public const string FUNC_NAME = "task/get_own_task";
+    public const string FUNC_NAME = "group/get_group";
 
     [Serializable]
     public class Response
     {
-        public List<Task> tasks;
+        
     }
 }

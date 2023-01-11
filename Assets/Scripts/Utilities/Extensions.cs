@@ -75,9 +75,13 @@ public static class Extensions
         await API<CreateTask.Response>.Post(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 
-    public static async UniTask GetMyTasks()
+    /**
+     * <summary>
+     * 自分の所属しているグループを取得する
+     * </summary>
+     */
+    public static async UniTask GetMyGroups()
     {
-        var res = await API<GetOwnTask.Response>.Get(GetOwnTask.FUNC_NAME);
-        GameManager.Instance.Tasks = res.tasks;
+        await API<GetGroup.Response>.Get(GetGroup.FUNC_NAME);
     }
 }

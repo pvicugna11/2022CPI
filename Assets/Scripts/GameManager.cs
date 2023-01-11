@@ -20,8 +20,13 @@ public sealed class GameManager : Singleton<GameManager>
     public SessionData Session = new SessionData();
     public MyUser Player;
     public Date LoginDate;
-    public List<Task> Tasks = new List<Task>();
     public bool IsLogin { get; set; }
+
+    // タスク
+    public List<Task> Tasks = new List<Task>();
+
+    // グループ
+    public List<Group> Groups = new List<Group>();
 
     // 定数
     public static string appClientId = AWSCognitoIDs.AppClientId;
