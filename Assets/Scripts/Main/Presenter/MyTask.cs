@@ -63,5 +63,10 @@ public class MyTask : MonoBehaviour
             taskPrefabs[i].gameObject.SetActive(true);
             i++;
         }
+
+        for (int j = i; j < GameManager.MAX_TASK_NUM; ++j)
+        {
+            taskPrefabs[j].gameObject.SetActive(false);
+        }
     }
 }
