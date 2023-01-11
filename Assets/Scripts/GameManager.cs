@@ -27,12 +27,14 @@ public sealed class GameManager : Singleton<GameManager>
 
     // グループ
     public Group CurrentGroup;
+    public User CurrentUser;
 
     // 定数
     public static string appClientId = AWSCognitoIDs.AppClientId;
     public static string userPoolId = AWSCognitoIDs.UserPoolId;
-    public const int MAX_TASK_NUM = 10;  // タスクの最大数
-    public const int MAX_GROUP_NUM = 10; // グループの最大数
+    public const int MAX_TASK_NUM = 10;         // タスクの最大数
+    public const int MAX_GROUP_NUM = 10;        // グループの最大数
+    public const int MAX_GROUP_MEMBER_NUM = 10; // グループに所属するメンバーの最大数
 
     private async void Start()
     {

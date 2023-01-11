@@ -14,4 +14,11 @@ public class Date
     public int year;
     public int month;
     public int day;
+    public string character
+    {
+        get
+        {
+            return $"{year}/{month}/{day}";
+        }
+    }
 }
