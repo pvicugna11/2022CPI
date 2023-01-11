@@ -7,8 +7,9 @@ public class Test : MonoBehaviour
 {
     public TMP_InputField input;
 
-    public async void GetMyTask()
+    public void OnButtonClick()
     {
-        await Extensions.GetUserTasks(input.text);
+        Debug.Log(input.text);
+        input.text = "";
     }
 }
