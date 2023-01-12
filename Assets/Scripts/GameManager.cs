@@ -35,6 +35,7 @@ public sealed class GameManager : Singleton<GameManager>
     public const int MAX_TASK_NUM = 10;         // タスクの最大数
     public const int MAX_GROUP_NUM = 10;        // グループの最大数
     public const int MAX_GROUP_MEMBER_NUM = 10; // グループに所属するメンバーの最大数
+    public const int MAX_FRIEND_NUM = 50;       // フレンドの最大数
 
     private async void Start()
     {

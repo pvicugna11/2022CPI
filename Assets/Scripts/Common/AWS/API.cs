@@ -151,3 +151,22 @@ public static class GetGroup
         public Date startDate;
     }
 }
+
+// ------------------------------ FRIEND ------------------------------
+// ------------------------------ POST ------------------------------
+public static class GetFriends
+{
+    public const string FUNC_NAME = "friend/get_friends";
+
+    [Serializable]
+    public class PostData
+    {
+        public string client;
+    }
+
+    [Serializable]
+    public class Response
+    {
+        public List<string> friends;
+    }
+}

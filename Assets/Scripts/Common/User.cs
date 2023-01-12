@@ -1,4 +1,6 @@
+using System;
 
+[Serializable]
 public class User
 {
     public User(string _id)

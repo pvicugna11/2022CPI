@@ -11,7 +11,7 @@ public class MyTask : MonoBehaviour
     [SerializeField] private Transform content;
     [SerializeField] private TaskPrefab taskPrefab;
 
-    public List<TaskPrefab> taskPrefabs = new List<TaskPrefab>();
+    private List<TaskPrefab> taskPrefabs = new List<TaskPrefab>();
 
     private void Awake()
     {

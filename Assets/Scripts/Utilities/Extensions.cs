@@ -68,15 +68,14 @@ public static class Extensions
      * ユーザの情報を取得する
      * </summary>
      */
-    public static async UniTask GetUser(User user)
+    public static async UniTask<GetUserData.Response> GetUser(User user)
     {
         var postData = new GetUserData.PostData()
         {
             id = user.id,
         };
 
-        var res = await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
-        if (res.id == null) { user.Fetch(res); }
+        return await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 
     // ------------------------------ TASK ------------------------------
@@ -125,5 +124,21 @@ public static class Extensions
         };
 
         GameManager.Instance.CurrentGroup.Set(groupName, await API<GetGroup.Response>.Post(GetGroup.FUNC_NAME, JsonUtility.ToJson(postData)));
+    }
+
+    // ------------------------------ GROUP ------------------------------
+    /**
+     * <summary>
+     * 自分のフレンドを取得する
+     * </summary>
+     */
+    public static async UniTask<GetFriends.Response> GetMyFriends()
+    {
+        var postData = new GetFriends.PostData()
+        {
+            client =  GameManager.Instance.Player.id,
+        };
+
+        return await API<GetFriends.Response>.Post(GetFriends.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 }

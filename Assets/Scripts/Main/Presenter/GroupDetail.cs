@@ -54,7 +54,9 @@ public class GroupDetail : MonoBehaviour
         int i = 0;
         foreach (var member in GameManager.Instance.CurrentGroup.members)
         {
-            await Extensions.GetUser(member);
+            var memberData = await Extensions.GetUser(member);
+            member.Fetch(memberData);
+
             memberPrefabs[i].Fetch(member.name);
             memberPrefabs[i].m_Button.onClick.RemoveAllListeners();
             memberPrefabs[i].m_Button.onClick.AddListener(() =>
