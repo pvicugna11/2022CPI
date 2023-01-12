@@ -44,7 +44,7 @@ public class MyTask : MonoBehaviour
     private async UniTask Setup()
     {
         // 自分のタスクの取得
-        await Extensions.GetUserTasks(GameManager.Instance.Player.id);
+        GameManager.Instance.Tasks = await Extensions.GetUserTasks(GameManager.Instance.Player.id);
 
         // タスクがなかったら起床のタスクを作成
         if (GameManager.Instance.Tasks.Count == 0)

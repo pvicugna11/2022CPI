@@ -85,7 +85,7 @@ public static class Extensions
      * タスク情報を取得する
      * </summary>
      */
-    public static async UniTask GetUserTasks(string _id)
+    public static async UniTask<List<Task>> GetUserTasks(string _id)
     {
         var postData = new GetTasks.PostData()
         {
@@ -93,7 +93,7 @@ public static class Extensions
         };
 
         var res = await API<GetTasks.Response>.Post(GetTasks.FUNC_NAME, JsonUtility.ToJson(postData));
-        GameManager.Instance.Tasks = res.tasks;
+        return res.tasks;
     }
 
     /**
