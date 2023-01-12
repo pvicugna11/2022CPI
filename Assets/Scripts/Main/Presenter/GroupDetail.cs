@@ -60,7 +60,7 @@ public class GroupDetail : MonoBehaviour
             memberPrefabs[i].m_Button.onClick.AddListener(() =>
             {
                 GameManager.Instance.CurrentUser = member;
-                MainUIManager.Instance.DisplayCanvasGroup(MainUIManager.Instance.PersonalTaskCanvasGroup);
+                MainUIManager.Instance.SetCanvasGroup(MainUIManager.Instance.PersonalTaskCanvasGroup);
             });
             memberPrefabs[i].gameObject.SetActive(true);
             i++;

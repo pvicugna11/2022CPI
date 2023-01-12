@@ -55,7 +55,7 @@ public class GroupList : MonoBehaviour
             groupPrefabs[i].m_Button.onClick.AddListener(async () =>
             {
                 await Extensions.GetMyGroup(group);
-                MainUIManager.Instance.DisplayCanvasGroup(MainUIManager.Instance.GroupDetailCanvasGroup);
+                MainUIManager.Instance.SetCanvasGroup(MainUIManager.Instance.GroupDetailCanvasGroup);
             });
             groupPrefabs[i].gameObject.SetActive(true);
             i++;
