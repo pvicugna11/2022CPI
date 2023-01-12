@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -65,5 +66,8 @@ public class PersonalTask : MonoBehaviour
         {
             taskPrefabs[j].gameObject.SetActive(false);
         }
+
+        int ratio = tasks.Count(x => x.isFinished == true) / tasks.Count;
+        subTitle.SetText($"{ratio}%");
     }
 }
