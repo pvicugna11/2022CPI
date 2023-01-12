@@ -61,6 +61,41 @@ public static class API<T>
     }
 }
 
+// ------------------------------ USER ------------------------------
+// ------------------------------ POST ------------------------------
+public static class GetUserData
+{
+    public const string FUNC_NAME = "get_user_data";
+
+    [Serializable]
+    public class PostData
+    {
+        public string id;
+    }
+
+    [Serializable]
+    public class Response
+    {
+        public string id;
+        public string nickname;
+    }
+}
+
+// ------------------------------ GET ------------------------------
+public static class DecodeIdtoken
+{
+    public const string FUNC_NAME = "decode_idtoken";
+
+    [Serializable]
+    public class Response
+    {
+        public string id;
+        public string nickname;
+        public string email;
+        public List<string> groupNames;
+    }
+}
+
 // ------------------------------ TASK ------------------------------
 // ------------------------------ POST ------------------------------
 public static class GetTasks
@@ -94,21 +129,6 @@ public static class CreateTask
     public class Response
     {
 
-    }
-}
-
-// ------------------------------ GET ------------------------------
-public static class DecodeIdtoken
-{
-    public const string FUNC_NAME = "decode_idtoken";
-
-    [Serializable]
-    public class Response
-    {
-        public string id;
-        public string nickname;
-        public string email;
-        public List<string> groupNames;
     }
 }
 

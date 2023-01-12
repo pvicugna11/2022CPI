@@ -8,4 +8,10 @@ public class User
 
     public string id;
     public string name;
+
+    public void Fetch(GetUserData.Response res)
+    {
+        id = res.id;
+        name = res.nickname;
+    }
 }

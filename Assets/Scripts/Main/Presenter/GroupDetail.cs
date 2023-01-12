@@ -52,7 +52,7 @@ public class GroupDetail : MonoBehaviour
         int i = 0;
         foreach (var member in GameManager.Instance.CurrentGroup.members)
         {
-            // APIによるメンバー情報の取得
+            await Extensions.GetUser(member);
             memberPrefabs[i].Fetch(member.name);
             memberPrefabs[i].gameObject.SetActive(true);
             i++;

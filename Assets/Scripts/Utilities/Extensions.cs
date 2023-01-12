@@ -10,6 +10,7 @@ using Cysharp.Threading.Tasks;
  */
 public static class Extensions
 {
+    // ------------------------------ 共通 ------------------------------
     /**
      * <summary>
      * シーンを遷移する
@@ -32,6 +33,8 @@ public static class Extensions
         return SceneManager.GetActiveScene().handle == (int)type;
     }
 
+    // ------------------------------ API ------------------------------
+    // ------------------------------ USER ------------------------------
     /**
      * <summary>
      * 自分のユーザ情報を取得する
@@ -44,6 +47,39 @@ public static class Extensions
         GameManager.Instance.Player.SetMyUser(await API<DecodeIdtoken.Response>.Get(DecodeIdtoken.FUNC_NAME));
     }
 
+    /**
+     * <summary>
+     * ユーザの情報を取得する
+     * </summary>
+     */
+    public static async UniTask GetUser(string _id)
+    {
+        var postData = new GetUserData.PostData()
+        {
+            id = _id,
+        };
+
+        var res = await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
+        if (res.id == null) { GameManager.Instance.CurrentUser.Fetch(res); }
+    }
+
+    /**
+     * <summary>
+     * ユーザの情報を取得する
+     * </summary>
+     */
+    public static async UniTask GetUser(User user)
+    {
+        var postData = new GetUserData.PostData()
+        {
+            id = user.id,
+        };
+
+        var res = await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
+        if (res.id == null) { user.Fetch(res); }
+    }
+
+    // ------------------------------ TASK ------------------------------
     /**
      * <summary>
      * タスク情報を取得する
@@ -75,6 +111,7 @@ public static class Extensions
         await API<CreateTask.Response>.Post(CreateTask.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 
+    // ------------------------------ GROUP ------------------------------
     /**
      * <summary>
      * 自分の所属しているグループのデータを取得する
