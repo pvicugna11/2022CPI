@@ -170,3 +170,75 @@ public static class GetFriends
         public List<string> friends;
     }
 }
+
+public static class IsFriend
+{
+    public const string FUNC_NAME = "friend/is_friend";
+
+    [Serializable]
+    public class PostData
+    {
+        public string client;
+        public string partner;
+    }
+
+    [Serializable]
+    public class Response
+    {
+        public bool isFriend;
+    }
+}
+
+public static class RequestFriend
+{
+    public const string FUNC_NAME = "friend/request";
+
+    [Serializable]
+    public class PostData
+    {
+        public string client;
+        public string partner;
+    }
+
+    [Serializable]
+    public class Response
+    {
+    
+    }
+}
+
+public static class AcceptFriend
+{
+    public const string FUNC_NAME = "friend/accept";
+
+    [Serializable]
+    public class PostData
+    {
+        public string client;
+        public string partner;
+    }
+
+    [Serializable]
+    public class Response
+    {
+    
+    }
+}
+
+public static class DeleteFriend
+{
+    public const string FUNC_NAME = "friend/delete";
+
+    [Serializable]
+    public class PostData
+    {
+        public string client;
+        public string partner;
+    }
+
+    [Serializable]
+    public class Response
+    {
+    
+    }
+}

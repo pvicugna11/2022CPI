@@ -33,7 +33,27 @@ public class AddFriend : MonoBehaviour
             }
             
             friendSearch.Nickname.SetText(res.nickname);
+            friendSearch.IsFriendImage.color = GetImageColor(await Extensions.IsMyFriend(res.id));
+            friendSearch.RequestFriendButton.onClick.RemoveAllListeners();
+            friendSearch.RequestFriendButton.onClick.AddListener(async () =>
+            {
+                if (await Extensions.IsMyFriend(res.id))
+                {
+                    await Extensions.DeleteMyFriend(res.id);
+                    friendSearch.IsFriendImage.color = GetImageColor(false);
+                }
+                else
+                {
+                    await Extensions.AddMyFriend(res.id);
+                    friendSearch.IsFriendImage.color = GetImageColor(true);
+                }
+            });
             friendSearch.gameObject.SetActive(true);
         });
+    }
+
+    private Color GetImageColor(bool _isFriend)
+    {
+        return _isFriend ? new Color(0, 1, 0) : new Color(1, 0, 0);
     }
 }

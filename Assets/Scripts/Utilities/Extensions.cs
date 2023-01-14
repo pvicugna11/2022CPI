@@ -125,7 +125,7 @@ public static class Extensions
         GameManager.Instance.CurrentGroup.Set(groupName, await API<GetGroup.Response>.Post(GetGroup.FUNC_NAME, JsonUtility.ToJson(postData)));
     }
 
-    // ------------------------------ GROUP ------------------------------
+    // ------------------------------ FRIEND ------------------------------
     /**
      * <summary>
      * 自分のフレンドを取得する
@@ -140,4 +140,61 @@ public static class Extensions
 
         return await API<GetFriends.Response>.Post(GetFriends.FUNC_NAME, JsonUtility.ToJson(postData));
     }
+
+    /**
+     * <summary>
+     * 自分とフレンドかどうか
+     * </summary>
+     */
+    public static async UniTask<bool> IsMyFriend(string _id)
+    {
+        var postData = new IsFriend.PostData()
+        {
+            client =  GameManager.Instance.Player.id,
+            partner = _id,
+        };
+
+        var res = await API<IsFriend.Response>.Post(IsFriend.FUNC_NAME, JsonUtility.ToJson(postData));
+        return res.isFriend;
+    }
+
+    /**
+     * <summary>
+     * フレンド追加
+     * </summary>
+     */
+    public static async UniTask AddMyFriend(string _id)
+    {
+        var requestPostData = new RequestFriend.PostData()
+        {
+            client =  GameManager.Instance.Player.id,
+            partner = _id,
+        };
+
+        var acceptPostData = new AcceptFriend.PostData()
+        {
+            partner =  GameManager.Instance.Player.id,
+            client = _id,
+        };
+
+        await API<RequestFriend.Response>.Post(RequestFriend.FUNC_NAME, JsonUtility.ToJson(requestPostData));
+        await API<AcceptFriend.Response>.Post(AcceptFriend.FUNC_NAME, JsonUtility.ToJson(acceptPostData));
+    }
+
+    /**
+     * <summary>
+     * フレンド解除
+     * </summary>
+     */
+    public static async UniTask DeleteMyFriend(string _id)
+    {
+        var postData = new DeleteFriend.PostData()
+        {
+            client =  GameManager.Instance.Player.id,
+            partner = _id,
+        };
+
+        await API<DeleteFriend.Response>.Post(DeleteFriend.FUNC_NAME, JsonUtility.ToJson(postData));
+    }
+
 }
