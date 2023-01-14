@@ -33,27 +33,20 @@ public class AddFriend : MonoBehaviour
             }
             
             friendSearch.Nickname.SetText(res.nickname);
-            friendSearch.IsFriendImage.color = GetImageColor(await Extensions.IsMyFriend(res.id));
-            friendSearch.RequestFriendButton.onClick.RemoveAllListeners();
-            friendSearch.RequestFriendButton.onClick.AddListener(async () =>
+            friendSearch.RequestFriendToggle.isOn = await Extensions.IsMyFriend(res.id);
+            friendSearch.RequestFriendToggle.onValueChanged.RemoveAllListeners();
+            friendSearch.RequestFriendToggle.onValueChanged.AddListener(async value =>
             {
-                if (await Extensions.IsMyFriend(res.id))
+                if (value)
                 {
-                    await Extensions.DeleteMyFriend(res.id);
-                    friendSearch.IsFriendImage.color = GetImageColor(false);
+                    await Extensions.AddMyFriend(res.id);
                 }
                 else
                 {
-                    await Extensions.AddMyFriend(res.id);
-                    friendSearch.IsFriendImage.color = GetImageColor(true);
+                    await Extensions.DeleteMyFriend(res.id);
                 }
             });
             friendSearch.gameObject.SetActive(true);
         });
-    }
-
-    private Color GetImageColor(bool _isFriend)
-    {
-        return _isFriend ? new Color(0, 1, 0) : new Color(1, 0, 0);
     }
 }

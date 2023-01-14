@@ -101,10 +101,5 @@ public class CreateGroup : MonoBehaviour
             friendGroupPrefabs[j].gameObject.SetActive(false);
         }
     }
-
-    private Color GetImageColor(bool isMember)
-    {
-        return isMember ? new Color(0, 1, 0) : new Color(1, 0, 0);
-    }
 }
 }

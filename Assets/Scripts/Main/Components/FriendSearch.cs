@@ -7,6 +7,5 @@ using TMPro;
 public class FriendSearch : MonoBehaviour
 {
     public TextMeshProUGUI Nickname;
-    public Button RequestFriendButton;
-    public Image IsFriendImage;
+    public Toggle RequestFriendToggle;
 }
