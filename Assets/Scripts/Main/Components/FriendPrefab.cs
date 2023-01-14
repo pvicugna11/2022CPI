@@ -8,7 +8,7 @@ public class FriendPrefab : MonoBehaviour
 {
     public TextMeshProUGUI UserName;
 
-    public void Fetch(User user)
+    public virtual void Fetch(User user)
     {
         UserName.SetText(user.name);
     }

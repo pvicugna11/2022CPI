@@ -45,7 +45,7 @@ public class GroupList : MonoBehaviour
     {
         await UniTask.WaitUntil(() => groupPrefabs.Count >= GameManager.MAX_GROUP_NUM);
 
-        createButton.gameObject.SetActive(GameManager.Instance.Player.groupNames.Count == GameManager.MAX_GROUP_NUM);
+        createButton.gameObject.SetActive(GameManager.Instance.Player.groupNames.Count < GameManager.MAX_GROUP_NUM);
 
         int i = 0;
         foreach (var group in GameManager.Instance.Player.groupNames)

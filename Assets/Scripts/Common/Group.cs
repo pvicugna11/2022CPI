@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Group
 {
     public string name;
-    public List<User> members;
+    public List<User> members = new List<User>();
     public Date startDate;
 
     public void Set(string groupName, GetGroup.Response res)

@@ -152,6 +152,25 @@ public static class GetGroup
     }
 }
 
+public static class CreateGroup
+{
+    public const string FUNC_NAME = "group/create_group";
+
+    [Serializable]
+    public class PostData
+    {
+        public string name;
+        public List<string> members;
+        public Date startDate;
+    }
+
+    [Serializable]
+    public class Response
+    {
+        
+    }
+}
+
 // ------------------------------ FRIEND ------------------------------
 // ------------------------------ POST ------------------------------
 public static class GetFriends

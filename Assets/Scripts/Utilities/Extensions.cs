@@ -125,6 +125,23 @@ public static class Extensions
         GameManager.Instance.CurrentGroup.Set(groupName, await API<GetGroup.Response>.Post(GetGroup.FUNC_NAME, JsonUtility.ToJson(postData)));
     }
 
+    /**
+     * <summary>
+     * グループ作成
+     * </summary>
+     */
+    public static async UniTask CreateMyGroup(Group group)
+    {
+        var postData = new CreateGroup.PostData()
+        {
+            name = group.name,
+            members = group.members.ConvertAll(x => x.id),
+            startDate = group.startDate,
+        };
+
+        await API<CreateGroup.Response>.Post(CreateGroup.FUNC_NAME, JsonUtility.ToJson(postData));
+    }
+
     // ------------------------------ FRIEND ------------------------------
     /**
      * <summary>

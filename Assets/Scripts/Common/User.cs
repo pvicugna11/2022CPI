@@ -3,6 +3,7 @@ using System;
 [Serializable]
 public class User
 {
+    public User() {}
     public User(string _id)
     {
         id = _id;
