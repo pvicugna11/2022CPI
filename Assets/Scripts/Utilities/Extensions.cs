@@ -52,15 +52,14 @@ public static class Extensions
      * ユーザの情報を取得する
      * </summary>
      */
-    public static async UniTask GetUser(string _id)
+    public static async UniTask<GetUserData.Response> GetUser(string _id)
     {
         var postData = new GetUserData.PostData()
         {
             id = _id,
         };
 
-        var res = await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
-        if (res.id == null) { GameManager.Instance.CurrentUser.Fetch(res); }
+        return await API<GetUserData.Response>.Post(GetUserData.FUNC_NAME, JsonUtility.ToJson(postData));
     }
 
     /**
