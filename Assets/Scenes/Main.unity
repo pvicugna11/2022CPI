@@ -4737,6 +4737,13 @@ MonoBehaviour:
   createGroupButton: {fileID: 158478127}
   content: {fileID: 723206849}
   friendGroupPrefab: {fileID: 6357091992767088933, guid: d14c6b7faecd94144975c3b0aa51596d, type: 3}
+  group:
+    name: 
+    members: []
+    startDate:
+      year: 0
+      month: 0
+      day: 0
 --- !u!1 &1516488111
 GameObject:
   m_ObjectHideFlags: 0

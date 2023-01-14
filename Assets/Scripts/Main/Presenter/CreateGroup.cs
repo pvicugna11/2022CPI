@@ -20,7 +20,7 @@ public class CreateGroup : MonoBehaviour
 
     private List<FriendGroupPrefab> friendGroupPrefabs = new List<FriendGroupPrefab>();
     private List<User> friends = new List<User>();
-    public Group group = new Group();
+    private Group group = new Group();
 
     private void Awake()
     {
