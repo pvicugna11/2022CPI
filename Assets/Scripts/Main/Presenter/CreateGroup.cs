@@ -14,6 +14,9 @@ public class CreateGroup : MonoBehaviour
     [Header("View")]
     [SerializeField] private Button backButton;
     [SerializeField] private TMP_InputField groupInput;
+    [SerializeField] private TMP_InputField yearInput;
+    [SerializeField] private TMP_InputField monthInput;
+    [SerializeField] private TMP_InputField dayInput;
     [SerializeField] private Button createGroupButton;
     [SerializeField] private RectTransform content;
     [SerializeField] private FriendGroupPrefab friendGroupPrefab;
@@ -42,6 +45,21 @@ public class CreateGroup : MonoBehaviour
         groupInput.onEndEdit.AddListener(value =>
         {
             group.name = value;
+        });
+
+        yearInput.onEndEdit.AddListener(value =>
+        {
+            group.startDate.year = Int32.Parse(value);
+        });
+
+        monthInput.onEndEdit.AddListener(value =>
+        {
+            group.startDate.month = Int32.Parse(value);
+        });
+
+        dayInput.onEndEdit.AddListener(value =>
+        {
+            group.startDate.day = Int32.Parse(value);
         });
 
         createGroupButton.onClick.AddListener(async () =>

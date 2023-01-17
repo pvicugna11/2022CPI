@@ -10,6 +10,12 @@ public class Date
         month = now.Month;
         day = now.Day;
     }
+    public Date(DateStr value)
+    {
+        year = Int32.Parse(value.year);
+        month = Int32.Parse(value.month);
+        day = Int32.Parse(value.day);
+    }
 
     public int year;
     public int month;
@@ -21,4 +27,19 @@ public class Date
             return $"{year}/{month}/{day}";
         }
     }
+}
+
+[Serializable]
+public class DateStr
+{
+    public DateStr(Date value)
+    {
+        year = value.year.ToString();
+        month = value.month.ToString();
+        day = value.day.ToString();
+    }
+
+    public string year;
+    public string month;
+    public string day;
 }

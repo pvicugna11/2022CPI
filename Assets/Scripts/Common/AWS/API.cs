@@ -11,6 +11,7 @@ public static class API<T>
     public static async UniTask<T> Post(string funcName, string postData)
     {
         string url = URL + funcName;
+        Debug.Log(postData);
 
         await UniTask.WaitUntil(() => GameManager.Instance.IsLogin);
 
@@ -148,7 +149,7 @@ public static class GetGroup
     public class Response
     {
         public List<string> members;
-        public Date startDate;
+        public DateStr startDate;
     }
 }
 
@@ -161,7 +162,7 @@ public static class CreateGroup
     {
         public string name;
         public List<string> members;
-        public Date startDate;
+        public DateStr startDate;
     }
 
     [Serializable]

@@ -136,7 +136,7 @@ public static class Extensions
         {
             name = group.name,
             members = group.members.ConvertAll(x => x.id),
-            startDate = group.startDate,
+            startDate = new DateStr(group.startDate),
         };
 
         await API<CreateGroup.Response>.Post(CreateGroup.FUNC_NAME, JsonUtility.ToJson(postData));
