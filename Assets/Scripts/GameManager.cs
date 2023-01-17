@@ -94,6 +94,16 @@ public sealed class GameManager : Singleton<GameManager>
         }
     }
 
+    public void DeleteSession()
+    {
+        string path = Application.persistentDataPath + "/savefile.json";
+
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
+
     public async UniTask<bool> RefreshTokenSignin()
     {
         var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);

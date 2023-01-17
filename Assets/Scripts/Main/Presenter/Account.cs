@@ -11,12 +11,19 @@ public class Account : MonoBehaviour
     [SerializeField] private TextMeshProUGUI id;
     [SerializeField] private TextMeshProUGUI email;
     [SerializeField] private Button friendListButton;
+    [SerializeField] private Button logoutButton;
 
     private void Awake()
     {
         friendListButton.onClick.AddListener(() =>
         {
             MainUIManager.Instance.SetCanvasGroup(MainUIManager.Instance.FriendListCanvasGroup);
+        });
+
+        logoutButton.onClick.AddListener(async () =>
+        {
+            GameManager.Instance.DeleteSession();
+            await Extensions.TransitScene(SceneType.SIGNIN);
         });
     }
 
