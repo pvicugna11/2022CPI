@@ -65,6 +65,9 @@ public class CreateGroup : MonoBehaviour
         createGroupButton.onClick.AddListener(async () =>
         {
             await Extensions.CreateMyGroup(group);
+            await GameManager.Instance.RefreshTokenSignin();
+            await Extensions.GetMyUser();
+            MainUIManager.Instance.SetCanvasGroup(MainUIManager.Instance.GroupListCanvasGroup);
         });
     }
 
