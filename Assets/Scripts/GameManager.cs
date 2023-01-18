@@ -46,7 +46,7 @@ public sealed class GameManager : Singleton<GameManager>
         if (saveData.date.IsPastDate(new Date(DateTime.Now)))
         {
             GameManager.Instance.LoginDate = new Date(DateTime.Now);
-
+            await ResetTask();
         }
         saveData.Set();
 
