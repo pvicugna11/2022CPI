@@ -27,6 +27,19 @@ public class Date
             return $"{year}/{month}/{day}";
         }
     }
+
+    public DateTime ConvertDateTime(Date value)
+    {
+        return new DateTime(value.year, value.month, value.day);
+    }
+
+    public bool IsPastDate(Date _subject)
+    {
+        DateTime body = ConvertDateTime(this);
+        DateTime subject = ConvertDateTime(_subject);
+
+        return body < subject;
+    }
 }
 
 [Serializable]

@@ -6,6 +6,7 @@ using Amazon.Extensions.CognitoAuthentication;
 using Amazon.CognitoIdentityProvider;
 using Amazon;
 using Cysharp.Threading.Tasks;
+using FantomLib;
 
 /**
  * <summary>
@@ -39,32 +40,41 @@ public sealed class GameManager : Singleton<GameManager>
 
     private async void Start()
     {
-        if (!LoadSession()) { return; }
+        var saveData = LoadSession();
+        if (saveData == null) { return; }
+
+        if (saveData.date.IsPastDate(new Date(DateTime.Now)))
+        {
+            GameManager.Instance.LoginDate = new Date(DateTime.Now);
+
+        }
+        saveData.Set();
 
         await UniTask.WaitUntil(() => Player != null);
         if (await RefreshTokenSignin()) { await CompleteSignin(); }
     }
 
-    [Serializable]
-    class SaveData
+    public async UniTask OnEndTask()
     {
-        public SaveData(string _refreshToken, MyUser _player, Date _date)
-        {
-            refreshToken = _refreshToken;
-            player = _player;
-            date = _date;
-        }
+        EndTask();
+        await Extensions.SetMyTasks(Tasks);
+    }
 
-        public string refreshToken;
-        public MyUser player;
-        public Date date;
-
-        public void Set()
+    private void EndTask()
+    {
+        foreach (var task in Tasks)
         {
-            GameManager.Instance.Session.RefreshToken = refreshToken;
-            GameManager.Instance.Player = player;
-            GameManager.Instance.LoginDate = new Date(DateTime.Now);
+            if (task.isFinished) { continue; }
+
+            task.isFinished = true;
+            break;
         }
+    }
+
+    private async UniTask ResetTask()
+    {
+        Tasks.ConvertAll(x => x.isFinished = false);
+        await Extensions.SetMyTasks(Tasks);
     }
 
     public void SaveSession()
@@ -75,22 +85,18 @@ public sealed class GameManager : Singleton<GameManager>
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
-    public bool LoadSession()
+    public SaveData LoadSession()
     {
         string path = Application.persistentDataPath + "/savefile.json";
 
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            data.Set();
-
-            return true;
+            return JsonUtility.FromJson<SaveData>(json);
         }
         else
         {
-            return false;
+            return default(SaveData);
         }
     }
 
@@ -159,5 +165,26 @@ public sealed class GameManager : Singleton<GameManager>
             return;
         }
         await Extensions.TransitScene(SceneType.MAIN);
+    }
+
+    [Serializable]
+    public class SaveData
+    {
+        public SaveData(string _refreshToken, MyUser _player, Date _date)
+        {
+            refreshToken = _refreshToken;
+            player = _player;
+            date = _date;
+        }
+
+        public string refreshToken;
+        public MyUser player;
+        public Date date;
+
+        public void Set()
+        {
+            GameManager.Instance.Session.RefreshToken = refreshToken;
+            GameManager.Instance.Player = player;
+        }
     }
 }

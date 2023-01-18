@@ -151,7 +151,7 @@ namespace FantomLib
 		
         private void Start()
         {
-        	
+            StartRecognizer();
         }
 
         // Update is called once per frame

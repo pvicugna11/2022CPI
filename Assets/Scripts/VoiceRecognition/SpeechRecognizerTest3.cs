@@ -14,6 +14,8 @@ using UnityEngine.Android;
 //音声認識でコントローラ（～Controller）とローカライズを利用したデモ
 public class SpeechRecognizerTest3 : MonoBehaviour {
 
+    public string EndSignalWord;
+
     public Text displayText;
     public Toggle webSearchToggle;
     public Button recongizerButton;
@@ -90,12 +92,8 @@ public class SpeechRecognizerTest3 : MonoBehaviour {
             dialog = new GameObject();
             }
         #endif
-        if (speechRecognizerDialog != null){
-        
-            DisplayText(displayText.text == "" ? "" : "\n", true); 
-            DisplayText("IsSupportedRecognizer = " + speechRecognizerDialog.IsSupportedRecognizer + "\n"
-                + "'RECORD_AUDIO' permission = " + speechRecognizerDialog.IsPermissionGranted, true);
-        }
+
+        OnStartRecognizer();
     }
     
     // Update is called once per frame
@@ -251,40 +249,27 @@ public class SpeechRecognizerTest3 : MonoBehaviour {
     }
 
     //Receive the result when speech recognition succeed.
-    public void OnResult(string[] words)
+    public async void OnResult(string[] words)
     {
         ResetUI();
         DisplayText(words);
         SwitchWebSearch(words);
+
 	    foreach (var item in words)
 	    {
-	        Debug.Log(item);    //各候補の文字列
-	        if(item.ToString() =="こんにちは"){
-	        }
-	        switch (item.ToString())
-        {
-            case "こんにちは": 
-                TextEditTest2.SendMessage("ShowLog"); //こんにちはに反応してメッセージを表示
-                SpeechRecognizerController.SendMessage("StopRecognizer");
-                break;  //switch文から抜ける
-
-            case "終了": //
-            	SpeechRecognizerController.SendMessage("StopRecognizer");
-                break; //switch文から抜ける
-            default:    //
-            	OnStartRecognizer(); //音声認識再開
-                break; //switch文から抜ける
-        }
-	        
-	        
+	        Debug.Log(item); // 各候補の文字列
+            if (item.ToString() == EndSignalWord) { await GameManager.Instance.OnEndTask(); }
     	}
+
+        // 再度音声認識を始める
+        OnStartRecognizer();
     }
 
     //Receive the error when speech recognition fail.
     public void OnError(string message)
     {
         ResetUI();
-        DisplayText(message,true);
+        DisplayText(message, false);
         OnStartRecognizer();
     }
 
