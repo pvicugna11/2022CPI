@@ -67,7 +67,7 @@ public class PersonalTask : MonoBehaviour
             taskPrefabs[j].gameObject.SetActive(false);
         }
 
-        int ratio = tasks.Count(x => x.isFinished == true) / tasks.Count;
-        subTitle.SetText($"{ratio}%");
+        float ratio = (float)tasks.Count(x => x.isFinished == true) / tasks.Count * 100f;
+        subTitle.SetText($"{ratio.ToString("F0")}%");
     }
 }
